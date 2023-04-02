@@ -4,4 +4,6 @@
     <string name="weather">Weather</string>
     <string name="search">search</string>
     <string name="suburb">suburb</string>
+    <string name="apikey">0632acb3c8mshc564394cf3d6721p11d305jsnc7bf4163b05c</string>
+    <string name="apihost">weatherapi-com.p.rapidapi.com</string>
 </resources>

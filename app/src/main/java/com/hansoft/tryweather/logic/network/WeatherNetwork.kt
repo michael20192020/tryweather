@@ -1,5 +1,7 @@
 package com.hansoft.tryweather.logic.network
 
+import com.hansoft.tryweather.MyApplication
+import com.hansoft.tryweather.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +17,9 @@ object WeatherNetwork {
     private val weatherServiceNew = ServiceCreator.create(WeatherServiceNew::class.java)
     suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
 
-    suspend fun searchWeather(q: String) = weatherService.searchWeather(q).await()
+    suspend fun searchWeather(q: String) = weatherService.searchWeather(
+        MyApplication.context.getString(R.string.apikey),
+        MyApplication.context.getString(R.string.apihost),q).await()
     suspend fun getDailyWeather(lng: String, lat: String) =
         weatherServiceNew.getDailyWeather(lng, lat).await()
     suspend fun getRealtimeWeather(lng: String, lat: String) =
