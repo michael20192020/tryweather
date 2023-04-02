@@ -1,17 +1,21 @@
 package com.hansoft.tryweather.ui.place
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.hansoft.tryweather.R
+import com.hansoft.tryweather.logic.network.GlideUtils
 import kotlinx.android.synthetic.main.fragment_place.*
 import kotlinx.android.synthetic.main.fragment_weather.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,7 +72,20 @@ class WeatherFragment : Fragment() {
         weatherViewModel.weatherLiveData.observe(viewLifecycleOwner, Observer{ result ->
             val weather = result.getOrNull()
             if (weather != null) {
-                tvResult.text = weather + " \u2103"  //"\u2109","\u00B0"
+                val pos = weather.indexOf("icon :")
+                tvResult.text = weather.substring(0,pos)  //" \u2103", "\u2109","\u00B0"
+                val url = weather.substring(pos+6).trim()
+              //  tvResult.text = tvResult.text.toString() + "\n" + url
+               // val glideUrl : GlideUrl = GlideUrl("https://cdn.weatherapi.com/weather/64x64/day/122.png", GlideUtils.glideHeaders())
+                //"https://cdn.weatherapi.com/weather/64x64/day/122.png"
+                val glideUrl = GlideUrl(url, LazyHeaders.Builder()
+                        .addHeader("X-RapidAPI-Key", "0632acb3c8mshc564394cf3d6721p11d305jsnc7bf4163b05c")
+                        .addHeader("X-RapidAPI-Host", "weatherapi-com.p.rapidapi.com")
+                        .build()
+                )
+                Glide.with(ivWeather.getContext())
+                    .load(glideUrl)
+                    .into(ivWeather)
             } else {
                 Toast.makeText(activity, "can not find weather information", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()

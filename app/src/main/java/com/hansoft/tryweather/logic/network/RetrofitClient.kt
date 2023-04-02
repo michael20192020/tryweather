@@ -5,8 +5,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     private const val BASE_URL = "https://weatherapi-com.p.rapidapi.com/"
+    private const val PICTURE_URL = "https://cdn.weatherapi.com/weather/64x64/day/116.png"
+    var isPicture = false
     private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(if (isPicture) PICTURE_URL else BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)

@@ -8,15 +8,18 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-object Network {
+object WeatherNetwork {
 
     private val placeService = ServiceCreator.create<PlaceService>()
     private val weatherService = RetrofitClient.create<WeatherService>()
-
+    private val weatherServiceNew = ServiceCreator.create(WeatherServiceNew::class.java)
     suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
 
     suspend fun searchWeather(q: String) = weatherService.searchWeather(q).await()
-
+    suspend fun getDailyWeather(lng: String, lat: String) =
+        weatherServiceNew.getDailyWeather(lng, lat).await()
+    suspend fun getRealtimeWeather(lng: String, lat: String) =
+        weatherServiceNew.getRealtimeWeather(lng, lat).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
