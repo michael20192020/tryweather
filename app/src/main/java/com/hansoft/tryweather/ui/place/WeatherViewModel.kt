@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.hansoft.tryweather.logic.Repository
+import com.hansoft.tryweather.logic.model.Location
 
 class WeatherViewModel : ViewModel() {
     private val suburbLiveData = MutableLiveData<String>()
@@ -12,6 +13,10 @@ class WeatherViewModel : ViewModel() {
     }
 
     fun searchSuburb(query: String) {
+        suburbLiveData.value = query
+    }
+
+    fun refreshWeather(query: String) {
         suburbLiveData.value = query
     }
 }

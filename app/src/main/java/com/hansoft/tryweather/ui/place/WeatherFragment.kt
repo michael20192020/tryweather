@@ -13,7 +13,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.hansoft.tryweather.R
 import com.hansoft.tryweather.logic.network.GlideUtils
-import kotlinx.android.synthetic.main.fragment_place.*
+//import kotlinx.android.synthetic.main.fragment_place.*
 import kotlinx.android.synthetic.main.fragment_weather.*
 
 
@@ -90,7 +90,23 @@ class WeatherFragment : Fragment() {
                 Toast.makeText(activity, "can not find weather information", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
+            swipeRefresh.isRefreshing = false
         })
+       // swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        refreshWeather()
+        swipeRefresh.setOnRefreshListener {
+            refreshWeather()
+        }
+    }
+
+    fun refreshWeather() {
+        if (etSuburb.text.isNotEmpty())
+        {
+            tvResult.text = ""
+            weatherViewModel.refreshWeather(etSuburb.text.toString())
+            swipeRefresh.isRefreshing = true
+        }
+
     }
 
     companion object {
