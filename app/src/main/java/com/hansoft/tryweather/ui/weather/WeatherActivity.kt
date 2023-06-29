@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -34,6 +35,8 @@ class WeatherActivity : AppCompatActivity() {
                     + View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
         window.statusBarColor = Color.TRANSPARENT
         setContentView(R.layout.activity_weather)
+        //println("aaa")
+        Log.d("aaa", "onCreate: aaa")
         if (viewModel.locationLng.isEmpty()) {
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
         }
